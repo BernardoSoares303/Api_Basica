@@ -74,7 +74,7 @@ namespace Api_Basica.Controllers
             return Ok(usuarios);
         }
 
-        [HttpPut("Update/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUsuario(int id, [FromBody] usuario usuarioAtualizado)
         {
             var usuarioExistente = await _appDbContext.Usuarios.FindAsync(id);
@@ -92,6 +92,21 @@ namespace Api_Basica.Controllers
             await _appDbContext.SaveChangesAsync();
 
             return Ok(usuarioExistente);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUsuario(int id)
+        {
+            var usuario = await _appDbContext.Usuarios.FindAsync(id);
+
+            if (usuario == null)
+                return NotFound("Usuário não encontrado!");
+
+            _appDbContext.Usuarios.Remove(usuario);
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(usuario);
         }
     }
 }
