@@ -16,6 +16,7 @@ var conexaoString = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(conexaoString, ServerVersion.AutoDetect(conexaoString))
 );
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Api_Basica.Models
 {
@@ -16,10 +18,14 @@ namespace Api_Basica.Models
 
         public string Senha { get; set; }
 
-        public string Role { get; set; } = "Dev";
+        public string Role { get; set; }
 
         // Relacionamentos
-        public List<Projeto> ProjetosCriados { get; set; }
-        public List<Tarefa> TarefasResponsavel { get; set; }
+
+        [JsonIgnore] // inicializados para não causar erro de null
+        public List<Projeto> ProjetosCriados { get; set; } = new List<Projeto>();
+
+        [JsonIgnore]
+        public List<Tarefa> TarefasResponsavel { get; set; } = new List<Tarefa>();
     }
 }
