@@ -1,4 +1,5 @@
 ﻿using Api_Basica.Data;
+using Api_Basica.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api_Basica.Controllers
@@ -13,6 +14,15 @@ namespace Api_Basica.Controllers
         public UsuarioController(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUsuario(usuario usuario)
+        {
+            _appDbContext.Usuarios.Add(usuario);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(usuario);
         }
     }
 }
