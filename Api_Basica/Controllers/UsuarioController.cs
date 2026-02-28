@@ -33,5 +33,14 @@ namespace Api_Basica.Controllers
 
             return Ok(usuarios);
         }
+
+        [HttpGet("id")]
+
+        public async Task<ActionResult<usuario>> GetUsuario(int id)
+        {
+            var usuario = await _appDbContext.Usuarios.FindAsync(id);
+
+            return Ok(usuario);
+        }
     }
 }
