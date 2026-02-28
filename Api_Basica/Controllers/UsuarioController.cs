@@ -34,13 +34,64 @@ namespace Api_Basica.Controllers
             return Ok(usuarios);
         }
 
-        [HttpGet("id")]
+        [HttpGet("BuscarId/{id}")]
 
         public async Task<ActionResult<usuario>> GetUsuario(int id)
         {
             var usuario = await _appDbContext.Usuarios.FindAsync(id);
 
+            if (usuario == null)
+            {
+                return NotFound("Usuario Não Encontrado!");
+            }
+
             return Ok(usuario);
+        }
+
+        [HttpGet("BuscarNome/{nome}")]
+        public async Task<ActionResult<IEnumerable<usuario>>> BuscarUsuarios(string nome)
+        {
+            var usuarios = await _appDbContext.Usuarios
+                .Where(u => EF.Functions.Like(u.Nome, $"%{nome}%"))
+                .ToListAsync();
+
+            if (!usuarios.Any())
+                return NotFound("Nome não encontrado!");
+
+            return Ok(usuarios);
+        }
+
+        [HttpGet("BuscarRole/{role}")]
+        public async Task<ActionResult<IEnumerable<usuario>>> BuscarUsuariosPorRole(string role)
+        {
+            var usuarios = await _appDbContext.Usuarios
+                .Where(u => u.Role == role)
+                .ToListAsync();
+
+            if (!usuarios.Any())
+                return NotFound("Role não encontrada!");
+
+            return Ok(usuarios);
+        }
+
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> UpdateUsuario(int id, [FromBody] usuario usuarioAtualizado)
+        {
+            var usuarioExistente = await _appDbContext.Usuarios.FindAsync(id);
+
+            if (usuarioExistente == null)
+                return NotFound("Usuário não encontrado!");
+
+            usuarioExistente.Nome = usuarioAtualizado.Nome;
+            usuarioExistente.Email = usuarioAtualizado.Email;
+            usuarioExistente.Role = usuarioAtualizado.Role;
+
+            // Atualiza a senha diretamente
+            usuarioExistente.Senha = usuarioAtualizado.Senha;
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(usuarioExistente);
         }
     }
 }
