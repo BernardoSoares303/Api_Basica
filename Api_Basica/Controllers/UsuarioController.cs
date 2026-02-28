@@ -1,6 +1,7 @@
 ﻿using Api_Basica.Data;
 using Api_Basica.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api_Basica.Controllers
 {
@@ -23,6 +24,14 @@ namespace Api_Basica.Controllers
             await _appDbContext.SaveChangesAsync();
 
             return Ok(usuario);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<usuario>>> GetUsuarios()
+        {
+            var usuarios = await _appDbContext.Usuarios.ToListAsync();
+
+            return Ok(usuarios);
         }
     }
 }
