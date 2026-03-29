@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Api_Basica.Models
 {
@@ -20,7 +21,5 @@ namespace Api_Basica.Models
         [ForeignKey("UsuarioCriadorId")]
         public usuario UsuarioCriador { get; set; }
 
-        // Relacionamento
-        public List<Tarefa> Tarefas { get; set; }
     }
 }

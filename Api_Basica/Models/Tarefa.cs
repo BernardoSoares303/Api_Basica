@@ -28,10 +28,5 @@ namespace Api_Basica.Models
         [ForeignKey("ProjetoId")]
         public Projeto Projeto { get; set; }
 
-        // FK Usuario responsável
-        public int UsuarioResponsavelId { get; set; }
-
-        [ForeignKey("UsuarioResponsavelId")]
-        public usuario UsuarioResponsavel { get; set; }
     }
 }

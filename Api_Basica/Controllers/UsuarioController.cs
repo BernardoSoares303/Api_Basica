@@ -17,6 +17,7 @@ namespace Api_Basica.Controllers
             _appDbContext = appDbContext;
         }
 
+        // Adiciona Um Novo Usuario
         [HttpPost]
         public async Task<IActionResult> AddUsuario(usuario usuario)
         {
@@ -26,6 +27,7 @@ namespace Api_Basica.Controllers
             return Ok(usuario);
         }
 
+        // Retorna Todos Os Usuarios Cadastrados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<usuario>>> GetUsuarios()
         {
@@ -34,8 +36,8 @@ namespace Api_Basica.Controllers
             return Ok(usuarios);
         }
 
+        //Retorna Um Usuario Especifico A Partir Do Id
         [HttpGet("BuscarId/{id}")]
-
         public async Task<ActionResult<usuario>> GetUsuario(int id)
         {
             var usuario = await _appDbContext.Usuarios.FindAsync(id);
@@ -48,6 +50,7 @@ namespace Api_Basica.Controllers
             return Ok(usuario);
         }
 
+        // Retorna Uma Lista De Usuarios A Partir Do Nome
         [HttpGet("BuscarNome/{nome}")]
         public async Task<ActionResult<IEnumerable<usuario>>> BuscarUsuarios(string nome)
         {
@@ -61,6 +64,7 @@ namespace Api_Basica.Controllers
             return Ok(usuarios);
         }
 
+        // Retorna Uma Lista De Usuarios A Partir Do Role
         [HttpGet("BuscarRole/{role}")]
         public async Task<ActionResult<IEnumerable<usuario>>> BuscarUsuariosPorRole(string role)
         {
@@ -74,6 +78,7 @@ namespace Api_Basica.Controllers
             return Ok(usuarios);
         }
 
+        // Atualiza Um Usuario Especifico A Partir Do Id
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUsuario(int id, [FromBody] usuario usuarioAtualizado)
         {
@@ -94,6 +99,7 @@ namespace Api_Basica.Controllers
             return Ok(usuarioExistente);
         }
 
+        // Deleta Um Usuario Especifico A Partir Do Id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
